@@ -1,8 +1,16 @@
 import app from './app';
-import express, { Express, Request, Response } from 'express';
+import init from './dbInit'
 
 const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => {
-  console.log(`[server]: Server is running at https://localhost:${PORT}`);
-});
+init()
+  .then((db) => {
+    app.listen(PORT, () => {
+      console.log(db);
+      console.log(`[server]: Server is running at https://localhost:${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+
