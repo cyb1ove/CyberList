@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+      "target": "es6",
       "lib": ["dom", "dom.iterable", "esnext"],
       "allowJs": true,
       "allowSyntheticDefaultImports": true,
@@ -12,9 +13,10 @@
       "forceConsistentCasingInFileNames": true,
       "moduleResolution": "node",
       "resolveJsonModule": true,
+      "outDir": "./build",
       "isolatedModules": true,
       "noEmit": true,
       "jsx": "react"
     },
-    "include": ["src"]
+    "include": ["src/*"]
   }
