@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es2015", 
+    "module": "amd",
+    "moduleResolution": "node",
+    "declaration": true, 
+    "strict": true,
+    "declarationMap": true,
+    "rootDir": ".",
+    "outDir": "./lib/",
+    "composite": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+  },
+  "include": ["./**/*.ts", "./**/*.tsx"],
+  "references": [
+    {
+      "path": "../backend",
+    }
+  ]
+}
