@@ -1,6 +1,6 @@
 import { getModelForClass, prop } from '@typegoose/typegoose';
 
-class TaskSchema {
+export class TaskSchema {
   @prop({ default: false })
   public _trash!: boolean;
 
@@ -14,6 +14,5 @@ class TaskSchema {
   public isCompleted!: boolean;
 }
 
-const TaskModel = getModelForClass(TaskSchema);
+export const Task = getModelForClass(TaskSchema);
 
-export default TaskModel;

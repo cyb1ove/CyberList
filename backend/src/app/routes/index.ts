@@ -1,8 +1,9 @@
 import express, { Router, Request, Response } from 'express';
+import taskRouter from '../controllers/task.controller';
 
 const router: Router = express.Router();
 
 export default router
-  .get('/', (req: Request, res: Response) => {
-    res.send('Express + TypeScript Server')
-  })
+  .get('/task/', taskRouter.onGetAll)
+  .post('/task/create', taskRouter.onCreateTask)
+  .put('/task/clear', taskRouter.onDeleteTask);
