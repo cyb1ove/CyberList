@@ -10,7 +10,7 @@
 
 ## Author
 
-👤 **cyb1ove**
+👤 **Andrew Zajkin**
 
 * Twitter: [@cyb1ove](https://twitter.com/cyb1ove)
 * Github: [@cyb1ove](https://github.com/cyb1ove)
