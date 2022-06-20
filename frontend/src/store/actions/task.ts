@@ -1,26 +1,52 @@
 import { Dispatch } from 'redux';
-import { Dispatch as ReactDispatch, SetStateAction } from 'react';
 import { setData, setLoading } from '../action-creators/task';
-import { axiosGetData, axiosUploadData, axiosMoveToTrash } from '../../services/requests';
-import { TaskAction } from '../../types/task';
+import { axiosUploadData } from '../../services/requests';
+import { TaskAction, RootState } from '../../types/task';
 
-export const fetchTaskData = () => async (dispatch: Dispatch<TaskAction>): Promise<void> => {
+export const updateAllTaskData = (
+  request: () => Promise<any>,
+) => async (dispatch: Dispatch<TaskAction>): Promise<void> => {
   dispatch(setLoading(true));
-  const result = await axiosGetData();
-  dispatch(setData(result));
+  const result = await request();
+  if (result instanceof Array) {
+    dispatch(setData(result));
+  } else {
+    dispatch(setData([]));
+  }
   dispatch(setLoading(false));
 };
 
 export const createTaskData = (text: string) => (
-  async (dispatch: Dispatch<TaskAction>): Promise<void> => {
-    const result = await axiosUploadData(text);
-    dispatch(setData(result));
+  async (dispatch: Dispatch<TaskAction>, getState: () => RootState): Promise<void> => {
+    const { task: { tasks } } = getState();
+    dispatch(setData([...tasks, 'loading']));
+    axiosUploadData(text)
+      .then((newTask) => {
+        dispatch(setData([...tasks, newTask]));
+      });
   });
 
-export const moveToTrashTaskData = (_id: string, setLoading: ReactDispatch<SetStateAction<boolean>>) => (
-  async (dispatch: Dispatch<TaskAction>): Promise<void> => {
-    setLoading(true);
-    const result = await axiosMoveToTrash(_id);
-    dispatch(setData(result));
-    setLoading(false);
+export const updateTaskData = (
+  request: (_id: string, ...args: any[]) => Promise<any>,
+  _id: string,
+  ...args: any[]
+) => (
+  async (dispatch: Dispatch<TaskAction>, getState: () => RootState): Promise<void> => {
+    const { task: { tasks } } = getState();
+
+    dispatch(setData(
+      tasks.map((task) => (typeof task === 'object' && task._id === _id ? 'loading' : task)),
+    ));
+    request(_id, ...args)
+      .then((data) => {
+        let updatedTasks;
+
+        if (data._id) {
+          updatedTasks = tasks.map((task) => (typeof task === 'object' && task._id === _id ? data : task));
+        } else {
+          updatedTasks = tasks.filter((task) => typeof task === 'object' && task._id !== _id);
+        }
+
+        dispatch(setData(updatedTasks));
+      });
   });

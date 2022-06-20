@@ -8,4 +8,7 @@ export const COLOR = {
 export const BUTTON_ACTION = {
   ADD: 'ADD',
   REMOVE: 'REMOVE',
+  REVERT: 'REVERT',
 };
+
+export const MODES = ['main', 'trash'];

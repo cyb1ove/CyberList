@@ -39,6 +39,7 @@ const config: Configuration = {
     compress: true,
     port: 4001,
   },
+  devtool: 'source-map',
 };
 
 export default config;

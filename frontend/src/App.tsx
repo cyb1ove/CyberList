@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Paper from '@mui/material/Paper';
-import useTypedSelector from './hooks/useTypedSelector';
 import useTypedDispatch from './hooks/useTypedDispatch';
-import { fetchTaskData } from './store/actions/task';
+import { updateAllTaskData } from './store/actions/task';
 import Footer from './components/molecula/Footer';
 import TaskGroup from './components/organisms/TaskGroup';
 import TaskAdder from './components/molecula/TaskAdder';
+import { axiosGetData } from './services/requests';
 
 const styles = {
   display: 'flex',
@@ -20,18 +20,26 @@ const styles = {
 };
 
 const App: React.FC = () => {
+  const [count, setCount] = useState<number>(0);
   const dispatch = useTypedDispatch();
 
   useEffect(() => {
-    dispatch(fetchTaskData());
+    dispatch(updateAllTaskData(axiosGetData));
   }, []);
 
   return (
     <Paper elevation={8} sx={styles}>
-      <span>Todo App</span>
+      <span
+        style={{
+          fontSize: '1.5rem',
+          fontWeight: 'bold',
+        }}
+      >
+        Todo App
+      </span>
       <TaskAdder />
-      <TaskGroup />
-      <Footer />
+      <TaskGroup setCount={setCount} />
+      <Footer count={count} />
     </Paper>
   );
 };

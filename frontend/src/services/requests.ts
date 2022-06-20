@@ -18,10 +18,42 @@ export const axiosUploadData = async (text: string) => {
   return result;
 };
 
-export const axiosMoveToTrash = async (_id: string) => {
+export const axiosMoveToTrash = async (id?: string) => {
   const result = axios
-    .put('/task/clear', {
+    .delete('/task/', {
+      params: {
+        ...(id ? { id } : {}),
+      },
+    })
+    .then((response) => response.data);
+
+  return result;
+};
+
+export const axiosCompleteTask = async (_id: string) => {
+  const result = axios
+    .put('/task/complete', {
       _id,
+    })
+    .then((response) => response.data);
+
+  return result;
+};
+
+export const axiosRevertTask = async (_id: string) => {
+  const result = axios
+    .put('/task/revert', {
+      _id,
+    })
+    .then((response) => response.data);
+
+  return result;
+};
+
+export const axiosChangeTask = async (_id: string, value: string) => {
+  const result = axios
+    .put('/task/edit', {
+      _id, value,
     })
     .then((response) => response.data);
 

@@ -12,6 +12,7 @@ const TaskAdder: React.FC = () => {
 
   const uploadTask = useCallback(() => {
     dispatch(createTaskData(value));
+    setValue('');
   }, [value]);
 
   return (

@@ -3,12 +3,17 @@ import { TextField } from '@material-ui/core';
 
 type Props = {
   value: string;
-  setValue: Dispatch<SetStateAction<string>>
+  setValue: Dispatch<SetStateAction<string>>;
   label?: string;
-  onBlur?: () => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 
-const MuiInput: React.FC<Props> = ({ value, setValue, label = '', onBlur = () => null }) => (
+const MuiInput: React.FC<Props> = ({
+  value,
+  setValue,
+  label = '',
+  onBlur,
+}) => (
   <TextField
     size="small"
     variant="outlined"

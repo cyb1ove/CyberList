@@ -1,3 +1,8 @@
+import rootReducer from '../store/reducers';
+import { MODES } from '../consts';
+
+export type Mode = typeof MODES[number];
+
 export interface Task {
   _id: string;
   _trash: boolean;
@@ -7,20 +12,21 @@ export interface Task {
 }
 
 export interface TaskState {
-  activeTasks: Task[];
-  trashTasks: Task[];
+  mode: Mode;
+  tasks: Array<Task | 'loading'>;
   loading: boolean;
   error: null | string;
 }
 
 export enum TaskActionTypes {
   SET_TASK_DATA = 'SET_TASK_DATA',
-  SET_TASK_LOADING = 'SET_TASK_LOADING'
+  SET_TASK_LOADING = 'SET_TASK_LOADING',
+  SET_TASK_MODE = 'SET_TASK_MODE',
 }
 
 export interface SetTaskDataAction {
   type: TaskActionTypes.SET_TASK_DATA;
-  payload: Task[];
+  payload: Array<Task | 'loading'>;
 }
 
 export interface SetTaskLoadingAction {
@@ -28,4 +34,11 @@ export interface SetTaskLoadingAction {
   payload: boolean;
 }
 
-export type TaskAction = SetTaskDataAction | SetTaskLoadingAction
+export interface SetTaskMode {
+  type: TaskActionTypes.SET_TASK_MODE;
+  payload: Mode;
+}
+
+export type TaskAction = SetTaskDataAction | SetTaskLoadingAction | SetTaskMode;
+
+export type RootState = ReturnType<typeof rootReducer>;

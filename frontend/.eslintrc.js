@@ -53,5 +53,6 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'eslint-plugin-react': 'off',
     'no-else-return': 'off',
+    'react/jsx-one-expression-per-line': 'off',
   },
 };
